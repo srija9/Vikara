@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 9000;
 
 //initialization
 const app = express();
+
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {useNewUrlParser: true, useUnifiedTopology: true});
 app.use(express.json());
 //routes
