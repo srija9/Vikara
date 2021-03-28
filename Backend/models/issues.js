@@ -14,7 +14,9 @@ const issuesSchema = new mongoose.Schema({
 		}
 	},
 	backers:{type:Number, required:true},
-	targetFund:{type: Number, required: true}
+	targetFund:{type: Number, required: true},
+	images:[String],
+	videos:[String]
 });
 
 
