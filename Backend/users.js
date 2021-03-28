@@ -46,7 +46,7 @@ router.post("/update_password",(req,res)=>{
 			{
 				hashPassword(new_password)
 				.then((hash)=>{
-					doc.password = hash;
+					doc.password_hash = hash;
 					doc.save();
 					res.json({message:"Password updated"});
 				})
@@ -68,7 +68,10 @@ router.post("/update_password",(req,res)=>{
 router.post("/update_phone",(req,res)=>{
 	const User= req.user.username;
     const newPhone=req.body.newPhone;
-	
+	if(!newPhone)
+	    return res.json({error: "Invalid phone number"});
+	else
+	{	
 	users.findOne({email:User})
 		.then(doc=>{
 			if(doc)
@@ -83,6 +86,7 @@ router.post("/update_phone",(req,res)=>{
 			console.log(err);
 			res.json({error: err})
 		})
+	}
 })
 
 module.exports = router;
