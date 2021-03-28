@@ -9,4 +9,14 @@ router.use(tokenAuth); //All user management endpoints are token authenticated
 	//Change email
 	//Change phone
 
+router.post("/changeEmail", (req, res)=>{
+
+	res.json({
+		
+		whichUser: req.user.username,
+		newEmail: req.body.newEmail
+	});
+})
+
+
 module.exports = router;
