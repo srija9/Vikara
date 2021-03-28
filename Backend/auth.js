@@ -26,8 +26,12 @@ async function generateAccessToken(object)
 
 
 //Authentication endpoints
-router.post("/login", (req, res)=>{
 
+// http://localhost:9000/auth/login
+
+
+router.post("/login", (req, res)=>{
+	
 	const {email, password} = req.body;
 	if(!email || !password)
 		return res.json({error: "Invalid email or password"});
@@ -53,7 +57,13 @@ router.post("/login", (req, res)=>{
 		})
 	}
 
+// { token : "asdasdlkalsdkjalksdjalksdj " }
+
+
 });
+
+
+// http://localhost:9000/auth/signup
 
 router.post("/signup", (req, res)=>{
 	//Validate the data.

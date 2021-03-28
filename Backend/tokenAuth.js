@@ -6,8 +6,16 @@ module.exports = (req, res, next) => {
 	if(authHeader)
 	{
 		const token = authHeader.split(' ')[1];
-		if(jwt.verify(token, process.env.TOKEN_SECRET))
-			return next();
+		jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) =>{
+			if(err) return res.json({error: "Invalid token"});
+			else
+			{
+				// set the user object in the request.
+				req.user = decoded;
+				return next();
+			}
+		})
 	}
-	return res.json({error: "Improper Authorization header"});
+	else
+		res.json({error: "Improper Authorization header"});
 }
