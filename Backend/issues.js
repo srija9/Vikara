@@ -12,7 +12,8 @@ router.use(tokenAuth); // All issues endpoints must be authenticated
 	//	delete an issue
 	//	add media
 
+router.post("/newIssue", (req, res)=>{
 
-
+})
 
 module.exports = router;

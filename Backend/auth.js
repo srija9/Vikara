@@ -31,7 +31,7 @@ async function generateAccessToken(object)
 
 
 router.post("/login", (req, res)=>{
-	
+
 	const {email, password} = req.body;
 	if(!email || !password)
 		return res.json({error: "Invalid email or password"});

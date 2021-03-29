@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const issuesSchema = new mongoose.Schema({
-	title:		{type:String, required:true},
+	title:	{type:String, required:true},
 	description:{type:String, required:true},
 	location:{
 		type:{
@@ -18,7 +18,6 @@ const issuesSchema = new mongoose.Schema({
 	images:[String],
 	videos:[String]
 });
-
 
 const issues = mongoose.model('issues', issuesSchema);
 
