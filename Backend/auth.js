@@ -32,7 +32,7 @@ async function generateAccessToken(object)
 
 
 router.post("/login", (req, res)=>{
-	
+
 	const {email, password} = req.body;
 	if(!email || !password)
 		return res.json({error: "Invalid email or password"});
@@ -93,19 +93,20 @@ router.post("/signup", async (req, res)=>{
 				    user.phone = Number(phone);
                     user.karma = 0;
                     let userModel = new users(user);
-                    userModel.save();
-                    res.json(userModel);
-					
+                    return userModel.save();
 				})
-				
-				
+				.then(doc => {
+                    res.json({message: "successfully signed up"});	
+				})
+				.catch(err=>{
+					console.log(err);
+					res.json({error: err});
+				})
 			}
 			else
 			    return res.json({error: "invalid phone number"});			
-			
 		}	
 	}	
-
 	});
 
 module.exports = router;

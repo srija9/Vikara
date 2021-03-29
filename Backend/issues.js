@@ -1,6 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const tokenAuth = require("./tokenAuth")
+const Issue = require("./models/issues");
+const User = require("./models/users");
+
+//Multer config
+const multer = require("multer");
+const storage = multer.diskStorage({
+	destination: function (req, res, cb){
+		cb(null, 'media/');
+	},
+	filename: function (req, file,cb){
+		cb(null, req.user.username.substring(0, req.user.username.indexOf("@")) + '-' + Date.now() + '.' +  file.mimetype.substring(file.mimetype.indexOf("/")+1));
+	}
+})
+const upload = multer({storage:storage})
 
 router.use(tokenAuth); // All issues endpoints must be authenticated
 
@@ -12,7 +26,37 @@ router.use(tokenAuth); // All issues endpoints must be authenticated
 	//	delete an issue
 	//	add media
 
+router.post("/newIssue", upload.array("photos", 12),(req, res)=>{
 
+	var inp = req.body;
+	if(!inp.title || !inp.description || !inp.targetFund)
+		return res.json({error: "Invalid Fields"});
+	else
+	{
+		User.findOne({email: req.user.username})
+		.then(doc1 => {
+			var newIssue = new Issue({
+				title: req.body.title,
+				description: req.body.description,
+				location: {coordinates: JSON.parse(req.body.location)},
+				backers: 0,
+				targetFund: Number(req.body.targetFund),
+				media:req.files,
+				user:doc1._id
+			});
 
+			doc1.issues.push(newIssue._id); //add this issue to the user's list.
+			doc1.save();
+			return newIssue.save()
+		})
+		.then(doc2 => {
+			res.json({message: "New issue created!"});
+		})
+		.catch(err=>{
+			console.log(err);
+			return res.json({error: err});
+		})
+	}
+})
 
 module.exports = router;
