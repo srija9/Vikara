@@ -18,7 +18,8 @@ const usersSchema = new mongoose.Schema({
 		type: Number,
 		required: true
 	},
-	karma: Number
+	karma: Number,
+	issues:[mongoose.Schema.Types.ObjectId]
 });
 
 const users = mongoose.model('users', usersSchema);
