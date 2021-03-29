@@ -39,9 +39,10 @@ router.post("/newIssue", upload.array("photos", 12),(req, res)=>{
 			var newIssue = new Issue({
 				title: req.body.title,
 				description: req.body.description,
-				location: {coordinates: JSON.parse(req.body.location)},
+				location: {type:"Point", coordinates: JSON.parse(req.body.location)},
 				backers: 0,
 				targetFund: Number(req.body.targetFund),
+				collectedFund:0,
 				media:req.files,
 				user:doc1._id
 			});
@@ -61,15 +62,36 @@ router.post("/newIssue", upload.array("photos", 12),(req, res)=>{
 })
 
 router.get("/fetchMyIssues", (req, res)=>{
-	User.find({email: req.user.username})
-	.then(docs => {
-		console.log(docs);
-		res.json({message: "hhi"});
+	User.findOne({email: req.user.username})
+	.then(doc => {
+		if(!doc) return res.json({error:"No user with this email"});
+		else
+			return Issue.find({user: doc._id});
+	})
+	.then(docs =>{
+		return res.json({issues:docs});
 	})
 	.catch(err =>{
 		console.log(err);
 		res.json({error: err});
 	})
 })
+
+router.post("/fetchIssuesNearLocation", (req, res)=>{
+	const {coords, maxDist} = req.body; //maxDist is in meters
+	if(!coords || !maxDist) return res.json({error: "Coordinates not sent!"});
+	else
+	{
+		Issue.find({ "location": { "$near": { "$geometry": { type: "Point", coordinates: coords }, "$maxDistance": maxDist}}})
+		.then(results=>{
+			res.json({results:results});
+		})
+		.catch(err=>{
+			console.log(err);
+			res.json({error:err});
+		})
+	}
+})
+
 
 module.exports = router;
