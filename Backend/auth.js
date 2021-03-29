@@ -5,6 +5,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const validator = require("validator");
 
 const users = require("./models/users");
 
@@ -65,12 +66,46 @@ router.post("/login", (req, res)=>{
 
 // http://localhost:9000/auth/signup
 
-router.post("/signup", (req, res)=>{
+
+router.post("/signup", async (req, res)=>{
 	//Validate the data.
+	const {full_Name, email, password, confirm_password, phone} = req.body;
 	// Passwords are matching
 	//Email is proper
 	//Phone number
 	//Insert the table.
-});
+	if(!validator.isEmail(email))
+	    return res.json({error: "enter correct email"});
+	else
+	{
+		if(!(password===confirm_password))
+		    return res.json({error: "re-enter password"});
+		else
+		{
+			if(validator.isMobilePhone(phone.toString()))
+			{
+				let user = {};
+				user.full_name = full_Name;
+				user.email = email;
+			    hashPassword(password)
+				.then((hash)=>{
+					user.password_hash=hash;
+				    user.phone = Number(phone);
+                    user.karma = 0;
+                    let userModel = new users(user);
+                    userModel.save();
+                    res.json(userModel);
+					
+				})
+				
+				
+			}
+			else
+			    return res.json({error: "invalid phone number"});			
+			
+		}	
+	}	
+
+	});
 
 module.exports = router;
