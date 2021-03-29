@@ -93,5 +93,22 @@ router.post("/fetchIssuesNearLocation", (req, res)=>{
 	}
 })
 
+router.post("inc_backer" ,(req,res)=>{
+    Issue.findOne({_id:req.body._id})
+    .then(doc=>{
+        doc.backers = doc.backers + 1;
+        doc.save();
+    })
+})
 
+router.post("dec_backer", (req,res)=>{
+    Issue.findOne({_id:req.body._id})
+    .then(doc=>{
+        if(doc.backers>0)
+        {
+            doc.backers = doc.backers - 1;
+            doc.save();
+        }
+    })
+})
 module.exports = router;
