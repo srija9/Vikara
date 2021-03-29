@@ -29,6 +29,7 @@ router.use(tokenAuth); // All issues endpoints must be authenticated
 router.post("/newIssue", upload.array("photos", 12),(req, res)=>{
 
 	var inp = req.body;
+
 	if(!inp.title || !inp.description || !inp.targetFund)
 		return res.json({error: "Invalid Fields"});
 	else
@@ -57,6 +58,18 @@ router.post("/newIssue", upload.array("photos", 12),(req, res)=>{
 			return res.json({error: err});
 		})
 	}
+})
+
+router.get("/fetchMyIssues", (req, res)=>{
+	User.find({email: req.user.username})
+	.then(docs => {
+		console.log(docs);
+		res.json({message: "hhi"});
+	})
+	.catch(err =>{
+		console.log(err);
+		res.json({error: err});
+	})
 })
 
 module.exports = router;
