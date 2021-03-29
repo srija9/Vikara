@@ -9,7 +9,7 @@ const patronsSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		required:true
 	},
-	amountDonated;{
+	amountDonated:{
 		type: Number,
 		required:true
 	}
