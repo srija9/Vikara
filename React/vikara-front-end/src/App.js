@@ -4,6 +4,7 @@ import Login from './Components/Login';
 import Signup from './Components/Signup';
 import NewIssue from './Components/NewIssue';
 import React from 'react';
+import Feed from './Components/Feed';
 function App() {
   return (
     <div className="App">
@@ -13,6 +14,9 @@ function App() {
             <Route exact path = "/" component = {Login}/>
             <Route path = "/Signup" component = {Signup}/>
             <Route path = "/NewIssue" component = {NewIssue}/>
+            <Route exact path = "/Feed" component = {Feed}/>
+
+            
           </Switch>
         </div>
       </Router>
