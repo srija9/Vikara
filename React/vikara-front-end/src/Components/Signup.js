@@ -1,6 +1,6 @@
 import React from 'react';
 
-function App() {
+function Signup() {
   return (
     <div>
     <div>This is SignUp Page </div>
@@ -25,4 +25,4 @@ function App() {
   );
 }
 
-export default App;
+export default Signup;

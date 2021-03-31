@@ -39,7 +39,7 @@ router.post("/newIssue", upload.array("photos", 12),(req, res)=>{
 			var newIssue = new Issue({
 				title: req.body.title,
 				description: req.body.description,
-				location: {type:"Point", coordinates: JSON.parse(req.body.location)},
+				location: {type:"Point", coordinates: JSON.parse('[' + req.body.location + ']')},
 				backers: 0,
 				targetFund: Number(req.body.targetFund),
 				collectedFund:0,
