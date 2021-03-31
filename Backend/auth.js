@@ -77,13 +77,16 @@ router.post("/signup", async (req, res)=>{
 	if(!validator.isEmail(email))
 	    return res.json({error: "enter correct email"});
 	else
-	{
-		if(!(password===confirm_password))
-		    return res.json({error: "re-enter password"});
-		else
-		{
-			if(validator.isMobilePhone(phone.toString()))
+	{   users.findOne({email:email})
+	    .then(doc=>{
+			if(!doc)
 			{
+				if(!(password===confirm_password))
+		            return res.json({error: "re-enter password"});
+		        else
+	         	{
+			        if(validator.isMobilePhone(phone.toString()))
+			    {
 				let user = {};
 				user.full_name = full_Name;
 				user.email = email;
@@ -102,10 +105,19 @@ router.post("/signup", async (req, res)=>{
 					console.log(err);
 					res.json({error: err});
 				})
+			    }
+			    else
+			        return res.json({error: "invalid phone number"});			
+		        }
 			}
 			else
-			    return res.json({error: "invalid phone number"});			
-		}	
+			    return res.json({error: "user already exists"});
+		})
+		.catch(err=>{
+			console.log(err);
+			res.json({error: err})
+		    })
+			
 	}	
 	});
 

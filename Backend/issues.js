@@ -93,6 +93,17 @@ router.post("/fetchIssuesNearLocation", (req, res)=>{
 	}
 })
 
+router.get("/openissue",(req, res)=>{
+	Issue.findOne({_id:req.body._id})
+    .then(doc=>{
+        return res.json({issue:doc});
+    })
+	.catch(err=>{
+		console.log(err);
+		res.json({error:err});
+	})
+})
+
 router.post("inc_backer" ,(req,res)=>{
     Issue.findOne({_id:req.body._id})
     .then(doc=>{
