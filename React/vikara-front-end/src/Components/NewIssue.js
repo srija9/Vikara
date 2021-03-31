@@ -53,6 +53,10 @@ function NewIssue()
         			<input type="textarea" onChange={(e)=>{setDescription(e.target.value)}}/>
       		</label>
       		<label>
+           			<p>Fund Target</p>
+        			<input type="Number" onChange={(e)=>{setFund(e.target.value)}}/>
+      		</label>
+      		<label>
            			<p>Location</p>
            			Longitude
         			<input type="number" onChange={(e)=>{setLocation([Number(e.target.value), location[1]])}}/>
@@ -63,6 +67,7 @@ function NewIssue()
            			<p>Photos</p>
         			<input type="file" multiple onChange={(e)=>{setFiles(e.target.files)}}/>
       		</label>
+      		
       		<button onClick={handleSubmit}>Create</button>
 		</div>
 
