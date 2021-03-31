@@ -4,7 +4,7 @@ import ScotchInfobar from "./ScotchInfobar.js";
 import axios from 'axios';
 import "./styles.css";
 import Card from './Card.js';
-import users from "./users-data";
+
 
 
 

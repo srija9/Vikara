@@ -26,6 +26,7 @@ export default function ScotchInfoBar() {
         }}
       >
       </a>
+      <h1>My Issues</h1>
     </div>
   );
 }
