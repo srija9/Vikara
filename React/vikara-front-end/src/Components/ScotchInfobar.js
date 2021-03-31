@@ -15,7 +15,6 @@ export default function ScotchInfoBar() {
         letterSpacing: "0.5px"
       }}
     >
-      Scotch.io Code Challenges!{" "}
       <a
         href=""
         style={{
@@ -26,7 +25,6 @@ export default function ScotchInfoBar() {
           borderBottom: "2px solid #40A8F3"
         }}
       >
-        Day 2 of #10DaysOfReact
       </a>
     </div>
   );

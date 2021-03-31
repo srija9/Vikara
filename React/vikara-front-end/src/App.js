@@ -15,8 +15,6 @@ function App() {
             <Route path = "/Signup" component = {Signup}/>
             <Route path = "/NewIssue" component = {NewIssue}/>
             <Route exact path = "/Feed" component = {Feed}/>
-
-            
           </Switch>
         </div>
       </Router>
